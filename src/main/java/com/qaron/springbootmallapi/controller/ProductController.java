@@ -6,12 +6,16 @@ import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
 import com.qaron.springbootmallapi.service.ProductService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 public class ProductController {
 
@@ -20,12 +24,23 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProducts(
+            // Filtering
             @RequestParam(required = false) ProductCategory category,
-            @RequestParam(required = false) String search) {
+            @RequestParam(required = false) String search,
+            // Sorting
+            @RequestParam(defaultValue = "created_date") String orderBy,
+            @RequestParam(defaultValue = "desc") String sort,
+            // Pagination
+            @RequestParam(defaultValue = "5") @Max(100) @Min(0) Integer limit,
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset) {
 
         ProductQueryParams params = new ProductQueryParams();
         params.setCategory(category);
         params.setSearch(search);
+        params.setOrderBy(orderBy);
+        params.setSort(sort);
+        params.setLimit(limit);
+        params.setOffset(offset);
 
         List<Product> productList = productService.getAllProducts(params);
 

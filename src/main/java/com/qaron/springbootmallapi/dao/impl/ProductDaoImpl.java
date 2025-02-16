@@ -27,6 +27,7 @@ public class ProductDaoImpl implements ProductDao {
 
         Map<String, Object> map = new HashMap<>();
 
+        // Searching
         if (params.getCategory() != null) {
             sql += " AND category = :category";
             map.put("category", params.getCategory().name());
@@ -36,6 +37,14 @@ public class ProductDaoImpl implements ProductDao {
             sql += " AND product_name LIKE :search";
             map.put("search", "%" + params.getSearch() + "%");
         }
+
+        // Sorting
+        sql += " ORDER BY " + params.getOrderBy() + " " + params.getSort();
+
+        // Pagination
+        sql += " LIMIT :limit OFFSET :offset";
+        map.put("limit", params.getLimit());
+        map.put("offset", params.getOffset());
 
         return jdbcTemplate.query(sql, map, new ProductRowMapper());
     }
