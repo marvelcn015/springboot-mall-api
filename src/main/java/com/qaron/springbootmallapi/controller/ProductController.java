@@ -1,5 +1,6 @@
 package com.qaron.springbootmallapi.controller;
 
+import com.qaron.springbootmallapi.constant.ProductCategory;
 import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
 import com.qaron.springbootmallapi.service.ProductService;
@@ -8,11 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getAllProducts(
+            @RequestParam(required = false) ProductCategory category,
+            @RequestParam(required = false) String search) {
+        List<Product> productList = productService.getAllProducts(category, search);
+
+        return ResponseEntity.ok(productList);
+    }
 
     @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId) {

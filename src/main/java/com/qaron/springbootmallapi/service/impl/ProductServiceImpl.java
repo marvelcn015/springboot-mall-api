@@ -1,5 +1,6 @@
 package com.qaron.springbootmallapi.service.impl;
 
+import com.qaron.springbootmallapi.constant.ProductCategory;
 import com.qaron.springbootmallapi.dao.ProductDao;
 import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
@@ -7,11 +8,18 @@ import com.qaron.springbootmallapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Override
+    public List<Product> getAllProducts(ProductCategory category, String search) {
+        return productDao.getAllProducts(category, search);
+    }
 
     @Override
     public Product getProductById(Integer productId) {
