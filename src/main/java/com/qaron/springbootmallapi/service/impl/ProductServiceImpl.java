@@ -1,6 +1,5 @@
 package com.qaron.springbootmallapi.service.impl;
 
-import com.qaron.springbootmallapi.constant.ProductCategory;
 import com.qaron.springbootmallapi.dao.ProductDao;
 import com.qaron.springbootmallapi.dto.ProductQueryParams;
 import com.qaron.springbootmallapi.dto.ProductRequest;

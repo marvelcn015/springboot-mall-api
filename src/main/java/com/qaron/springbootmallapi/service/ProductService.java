@@ -1,7 +1,6 @@
 package com.qaron.springbootmallapi.service;
 
 
-import com.qaron.springbootmallapi.constant.ProductCategory;
 import com.qaron.springbootmallapi.dto.ProductQueryParams;
 import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
