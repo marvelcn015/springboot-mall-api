@@ -1,6 +1,7 @@
 package com.qaron.springbootmallapi.controller;
 
 import com.qaron.springbootmallapi.constant.ProductCategory;
+import com.qaron.springbootmallapi.dto.ProductQueryParams;
 import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
 import com.qaron.springbootmallapi.service.ProductService;
@@ -21,7 +22,12 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllProducts(
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search) {
-        List<Product> productList = productService.getAllProducts(category, search);
+
+        ProductQueryParams params = new ProductQueryParams();
+        params.setCategory(category);
+        params.setSearch(search);
+
+        List<Product> productList = productService.getAllProducts(params);
 
         return ResponseEntity.ok(productList);
     }

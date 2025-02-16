@@ -2,6 +2,7 @@ package com.qaron.springbootmallapi.dao.impl;
 
 import com.qaron.springbootmallapi.constant.ProductCategory;
 import com.qaron.springbootmallapi.dao.ProductDao;
+import com.qaron.springbootmallapi.dto.ProductQueryParams;
 import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
 import com.qaron.springbootmallapi.rowmapper.ProductRowMapper;
@@ -21,20 +22,20 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Product> getAllProducts(ProductCategory category, String search) {
+    public List<Product> getAllProducts(ProductQueryParams params) {
         String sql = "SELECT product_id, product_name, category, image_url, price, stock, " +
                 "description, created_date, last_modified_date FROM product WHERE 1=1";
 
         Map<String, Object> map = new HashMap<>();
 
-        if (category != null) {
+        if (params.getCategory() != null) {
             sql += " AND category = :category";
-            map.put("category", category.name());
+            map.put("category", params.getCategory().name());
         }
 
-        if (search != null) {
+        if (params.getSearch() != null) {
             sql += " AND product_name LIKE :search";
-            map.put("search", "%" + search + "%");
+            map.put("search", "%" + params.getSearch() + "%");
         }
 
         return jdbcTemplate.query(sql, map, new ProductRowMapper());

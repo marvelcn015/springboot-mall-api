@@ -2,6 +2,7 @@ package com.qaron.springbootmallapi.service.impl;
 
 import com.qaron.springbootmallapi.constant.ProductCategory;
 import com.qaron.springbootmallapi.dao.ProductDao;
+import com.qaron.springbootmallapi.dto.ProductQueryParams;
 import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
 import com.qaron.springbootmallapi.service.ProductService;
@@ -17,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getAllProducts(ProductCategory category, String search) {
-        return productDao.getAllProducts(category, search);
+    public List<Product> getAllProducts(ProductQueryParams params) {
+        return productDao.getAllProducts(params);
     }
 
     @Override

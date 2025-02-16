@@ -1,13 +1,14 @@
 package com.qaron.springbootmallapi.dao;
 
 import com.qaron.springbootmallapi.constant.ProductCategory;
+import com.qaron.springbootmallapi.dto.ProductQueryParams;
 import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
 
 import java.util.List;
 
 public interface ProductDao {
-    List<Product> getAllProducts(ProductCategory category, String search);
+    List<Product> getAllProducts(ProductQueryParams params);
 
     Product getProductById(Integer productId);
 
