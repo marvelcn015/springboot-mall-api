@@ -5,6 +5,7 @@ import com.qaron.springbootmallapi.dto.ProductQueryParams;
 import com.qaron.springbootmallapi.dto.ProductRequest;
 import com.qaron.springbootmallapi.model.Product;
 import com.qaron.springbootmallapi.service.ProductService;
+import com.qaron.springbootmallapi.utils.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -23,7 +24,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProducts(
+    public ResponseEntity<Page<Product>> getAllProducts(
             // Filtering
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
@@ -43,8 +44,15 @@ public class ProductController {
         params.setOffset(offset);
 
         List<Product> productList = productService.getAllProducts(params);
+        Integer total = productService.countProduct(params);
 
-        return ResponseEntity.ok(productList);
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productList);
+
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/products/{productId}")
